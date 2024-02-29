@@ -26,8 +26,6 @@ int frogJump(int n, vector<int> &heights)
 
 
 
-
-
 // TABULATION 
 
 #include <bits/stdc++.h>
