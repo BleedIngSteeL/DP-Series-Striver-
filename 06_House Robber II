@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int solve(vector<int>& nums) {
+        int n=nums.size();
+        int prev2=0;
+        int prev1=nums[0];
+        for(int i=1;i<n;i++){
+            int take=nums[i];
+            if(n>1) take = take + prev2;
+            int leave = 0 + prev1;
+
+            int curi=max(take,leave);
+            prev2=prev1;
+            prev1=curi;
+        }
+        return prev1;
+    }
+
+    int rob(vector<int>& nums) {
+        int n=nums.size();
+        if(n==1){
+            return nums[0];
+        }
+        vector<int> temp1;
+        vector<int> temp2;
+        for(int i=0;i<n;i++){
+            if(i!=0) temp1.push_back(nums[i]); // temp1 contains all elements except first 
+            if(i!=n-1) temp2.push_back(nums[i]);   // temp2 contains every element ecept last
+        }
+        int opt1=solve(temp1);
+        int opt2=solve(temp2);
+        int ans=max(opt1,opt2);
+        return ans;
+    }
+};
