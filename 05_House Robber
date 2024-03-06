@@ -1,0 +1,23 @@
+// TABULATION METHOD 
+// TIME C: O(n)
+// SPACE C: O(1)
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int n=nums.size();
+        int prev2=0;
+        int prev1=nums[0];
+        for(int i=1;i<n;i++){
+            int take=nums[i];
+            if(n>1) take = take + prev2;
+            int leave = 0 + prev1;
+
+            int curi=max(take,leave);
+            prev2=prev1;
+            prev1=curi;
+        }
+        return prev1;
+    }
+};
+
+
