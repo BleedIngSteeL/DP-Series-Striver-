@@ -1,0 +1,55 @@
+// MEMOIZATION
+
+#include <bits/stdc++.h> 
+
+int solve(int ind,int W,vector<int> &weight, vector<int> &value,vector<vector<int>> &dp){
+	if(ind==0){
+		if(weight[0]<=W) return value[0];
+		else return 0;
+	}
+
+	if(dp[ind][W] != -1) return dp[ind][W];
+
+	int notPick= 0 + solve(ind-1,W,weight,value,dp);
+	int pick=INT_MIN;
+	if(weight[ind] <= W){
+		pick= value[ind] + solve(ind-1,W-weight[ind],weight,value,dp);
+	    }
+	return dp[ind][W] = max(pick,notPick);
+}
+
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	vector<vector<int>> dp(n,vector<int> (maxWeight+1,-1));
+	return solve(n-1,maxWeight,weight,value,dp);
+}
+
+
+
+
+// TABULATION 
+
+#include <bits/stdc++.h> 
+
+int knapsack(vector<int> wt, vector<int> val, int n, int maxWeight) 
+{
+	vector<vector<int>> dp(n,vector<int> (maxWeight+1,0));
+	for(int W=wt[0];W<=maxWeight;W++) dp[0][W]= val[0];
+
+	for(int ind=1;ind<n;ind++){
+		for(int W=0;W<=maxWeight;W++){
+			int notPick= 0 + dp[ind-1][W];
+			int pick=INT_MIN;
+			if(wt[ind] <= W){
+				pick= val[ind] + dp[ind-1][W-wt[ind]];
+				}
+			dp[ind][W] = max(pick,notPick);
+		}
+	}
+
+	return dp[n-1][maxWeight];
+}
+
+
+
+
